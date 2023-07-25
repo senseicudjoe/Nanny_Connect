@@ -1,0 +1,87 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    {% block title %}
+    <title>Register</title>
+    {% endblock %}
+    <link rel="stylesheet" href="/static/css/bootstrap.css">
+    <link rel="stylesheet" href="/static/style.css">
+  </head>
+  <body>
+   <div class="bg-success-subtle">
+  <div class="container px-lg-1 bg-success-subtle">
+    <nav class="navbar navbar-expand-lg bg-body-tertiary bg-success-subtle">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="{% url 'home' %}">NannyConnect</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="{% url 'nurses' %}">Nurses</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">About Us</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Contact</a>
+            </li>
+            {% if request.user.is_authenticated %}
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" role="button" href="#" data-bs-toggle="dropdown" aria-expanded="false">
+               {{request.user.first_name}}
+              </a>
+              
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="#">Dashboard</a></li>
+                <li><a class="dropdown-item" href="{% url 'signout' %}">Logout</a></li>
+              </ul>
+            </li>
+            {% else %}
+            <a class="btn btn-outline-success ms-4" href="{% url 'register' %}"  >Register</a>
+            {% endif %}
+            
+            
+          </ul>
+        </div>
+      </div>
+    </nav>
+  </div>
+  </div>
+    {% block content %}
+    
+    <div class="container col-xxl-12 px-2 py-5">
+        <div class="row flex-lg-row-reverse align-items-center g-5 py-2">
+          <div class="col-10 col-sm-8 col-lg-6">
+            <img src="{% static '/images/nurse.jpg' %}" class="img-thumbnail d-block mx-lg-auto img-fluid" alt="Bootstrap Themes" width="700" height="500" loading="lazy">
+          </div>
+          <div class="col-lg-6">
+            <h1 class="display-5 fw-bold lh-1 mb-3">Responsive left-aligned hero with image</h1>
+            <p class="lead">Quickly design and customize responsive mobile-first sites with Bootstrap, the world’s most popular front-end open source toolkit, featuring Sass variables and mixins, responsive grid system, extensive prebuilt components, and powerful JavaScript plugins.</p>
+            <div class="d-grid gap-2 d-md-flex justify-content-md-start">
+              <button type="button" class="btn btn-outline-success btn-lg px-4 me-md-2">Request a nanny now</button>
+              <!-- <button type="button" class="btn btn-outline-success btn-lg px-4">Default</button> -->
+            </div>
+          </div>
+        </div>
+    </div>
+
+    <!-- <div class = "row mt-5 p-5">
+        <div class = "col-lg-6">
+            <img src="{% static '/images/nurse.jpg' %}"  class="img-thumbnail mx-auto d-block"  width="500" height="500">
+
+        </div>
+        <div class = "col">
+            <h1>Kofi</h1>
+            
+        </div>
+    </div> -->
+    {% endblock %}
+
+    <script src="/static/js/bootstrap.bundle.js"></script>
+  </body>
+</html>  

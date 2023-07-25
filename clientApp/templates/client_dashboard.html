@@ -1,0 +1,52 @@
+{% extends 'home.html' %} {% block content %}
+
+<section class="pt-5">
+  <div class="container px-lg-2">
+    <div class="card-group">
+      {% for nurse in all_nurses %}
+      <div class="col-lg-6 col-xxl-4 mb-5 px-2">
+        <div class="card">
+          <img src="/media/{{nurse.image}}" class="card-img-top" alt="..." />
+          <div class="card-body">
+            <h5 class="card-title">{{nurse.fname}} {{nurse.lname}}</h5>
+            <p class="card-text">
+              This is a wider card with supporting text below as a natural
+              lead-in to additional content. This content is a little bit
+              longer.
+            </p>
+          </div>
+          <div class="card-footer">
+            <button class="btn btn-success w-100" type="button"
+            class="btn btn-primary"
+            data-bs-toggle="modal"
+            data-bs-target="#Modal-{{nurse.id}}"> View More</button>
+          </div>
+        </div>
+      </div>
+
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+{% for nurse in all_nurses %}
+<div class="modal fade" id="Modal-{{nurse.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-fullscreen">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          {{nurse.fname}}
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary">Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+
+{% endblock %}

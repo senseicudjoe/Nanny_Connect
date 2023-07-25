@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Register</title>
+    <!-- You downloaded bootstrap CSS and JS files, the href links t=your html to them -->
+    <link rel="stylesheet" href="/static/css/bootstrap.css">
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+
+<body>
+
+    <div class="container mt-5 mx-auto p-2 " style="width: 25%">
+
+       
+
+        <div class="col d-flex justify-content-center">
+            <div class="col mb-3 text-center">
+                <a href="{% url 'home' %}" class="text-success heading">Login</a>
+                <br>
+                <small class=" opacity-50 mb-5 col-lg-12">Fill the form below to sign into your account</small>
+            </div>
+        </div>
+
+        {% include 'messages.html' %}
+
+        <form class="mt-4" method="post">
+            {% csrf_token %}
+            <!-- Username input -->
+            <div class="form-outline mb-4">
+                <label class="form-label" for="name">Username</label>
+                <input type="text" id="name" name="username" class="form-control" required />
+            </div>
+
+            <!-- Password input -->
+            <div class="form-outline mb-4">
+                <label class="form-label" for="password">Password</label>
+                <input type="password" id="password" name="password" class="form-control" required />
+                <i class="bi bi-eye-fill"></i>
+            </div>
+
+            <!-- Submit button -->
+            <button type="submit" class="btn btn-outline-success mb-4 " style="width: 100%">Login</button>
+
+
+            <!-- 2 column grid layout for inline styling -->
+            <div class="row mb-4">
+                <div class="col d-flex justify-content-center">
+
+                    <div class="col mb-3 text-center">
+                        <!-- Simple link -->
+                        <a href="#!" class="text-success">Forgot password?</a>
+                    </div>
+                </div>
+
+                <!-- Register buttons -->
+                <div class="text-center">
+                    <p>Don't have an account? <a href="{% url 'register' %}" class="text-success">Sign up</a></p>
+                </div>
+        </form>
+    </div>
+
+    <script src="/static/js/bootstrap.js"></script>
+</body>
+
+
+</html>
