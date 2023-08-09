@@ -9,8 +9,13 @@
     {% endblock %}
     <link rel="stylesheet" href="/static/css/bootstrap.css">
     <link rel="stylesheet" href="/static/style.css">
+    <link rel="stylesheet" href="/static/dashboard/css/style.css">
+    <link rel="stylesheet" href="/static/dashboard/css/bootstrap-grid.css">
+    <link rel="stylesheet" href="/static/dashboard/css/icons.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/css/selectize.bootstrap3.min.css" integrity="sha256-ze/OEYGcFbPRmvCnrSeKbRTtjG4vGLHXgOqsyLFTRjg=" crossorigin="anonymous" />
   </head>
   <body>
+
    <div class="bg-success-subtle">
   <div class="container px-lg-1 bg-success-subtle">
     <nav class="navbar navbar-expand-lg bg-body-tertiary bg-success-subtle">
@@ -37,7 +42,10 @@
               </a>
               
               <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="#">Dashboard</a></li>
+                {% if request.user.is_nurse %}
+                <li><a class="dropdown-item" href="{% url 'nurse_settings' %}">Dashboard</a></li>
+                {% endif %}
+                
                 <li><a class="dropdown-item" href="{% url 'signout' %}">Logout</a></li>
               </ul>
             </li>
@@ -83,5 +91,8 @@
     {% endblock %}
 
     <script src="/static/js/bootstrap.bundle.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/js/standalone/selectize.min.js" integrity="sha256-+C0A5Ilqmu4QcSPxrlGpaZxJ04VjsRjKu+G82kl5UJk=" crossorigin="anonymous"></script>
   </body>
 </html>  

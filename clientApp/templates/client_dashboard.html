@@ -1,52 +1,205 @@
-{% extends 'home.html' %} {% block content %}
+{% extends 'home.html' %} 
+{% block content %}
+{% load static %}
+
+
 
 <section class="pt-5">
-  <div class="container px-lg-2">
-    <div class="card-group">
-      {% for nurse in all_nurses %}
-      <div class="col-lg-6 col-xxl-4 mb-5 px-2">
-        <div class="card">
-          <img src="/media/{{nurse.image}}" class="card-img-top" alt="..." />
-          <div class="card-body">
-            <h5 class="card-title">{{nurse.fname}} {{nurse.lname}}</h5>
-            <p class="card-text">
-              This is a wider card with supporting text below as a natural
-              lead-in to additional content. This content is a little bit
-              longer.
-            </p>
-          </div>
-          <div class="card-footer">
-            <button class="btn btn-success w-100" type="button"
-            class="btn btn-primary"
-            data-bs-toggle="modal"
-            data-bs-target="#Modal-{{nurse.id}}"> View More</button>
+<div class="row" style="margin-right: 0px !important; margin-left: 0px !important;">
+        <div class="col-xl-3"><div class="container-fluid py-4">
+            {% include 'messages.html' %}
+            <form class="d-flex flex-column justify-content-around" method = 'POST' action = "" role="search">
+                {% csrf_token %}
+              <div class="py-3 ms-2">
+                <label for="select-state" class="form-label">City: </label>
+                <select id="select-state" class="form-select" placeholder="Pick a state..." name="state">
+                    <option value="">Select a city...</option>
+                    <option value="TE">Tesano</option>
+                    <option value="EA">East Legon</option>
+                    <option value="CA">Cantonments</option>
+                    <option value="OS">Osu</option>
+                    <option value="AC">ACP</option>
+                </select>
+              </div>
+               
+              <div class="d-flex justify-content-evenly py-3">
+                <div class="px-2">
+                    <label for="min" class="form-label">Min: </label>
+                    <input type="number" class="form-control" id="min" name = "min" min="0">
+                </div>
+                <div class="px-2">
+                    <label for="max" class="form-label">Max: </label>
+                    <input type="number" class="form-control" id="Max" name= "max">
+                </div>
+
+              </div>
+
+              <div class="py-3">
+                <button class="btn btn-outline-success w-100" type="submit" name = "filter">Search</button>
+              </div>          
+            </form>
+        </div></div>
+        <!-- This creates a card for every nurse -->
+        <div class="col-xl-9">
+            <div class="container px-lg-2">
+                <div class="card-group">
+                  {% for nurse in all_nurses %}
+                  <div class="col-lg-4 col-xl-4 col-xxl-4 mb-5 px-2">
+                    <div class="card">
+                    {% if nurse.image %}
+                    <img src="/media/{{nurse.image}}" class="card-img-top" alt="..." />
+                    {% else %}
+                    <img src="/media/images.png" class="card-img-top" height = "191px" width = "339px"alt="..." />
+                    {% endif %}
+                      
+
+
+                      <div class="card-body">
+                        <h5 class="card-title">{{nurse.fname}} {{nurse.lname}}</h5>
+                        <p class="card-text">
+                          This is a wider card with supporting text below as a natural
+                          lead-in to additional content. This content is a little bit
+                          longer.
+                        </p>
+                      </div>
+                      <div class="card-footer">
+                        <button class="btn btn-success w-100" type="button"
+                        class="btn btn-success"
+                        data-bs-toggle="modal"
+                        data-bs-target="#Modal-{{nurse.id}}"> View More</button>
+                      </div>
+                    </div>
+                  </div>
+            
+                  {% endfor %}
+                </div>
+              </div>
+        </div>
+        
+    </div>
+ 
+</section>
+{% comment %} So basically what has happened here is that we initially looped through all nurses to create cards for them
+then we created modals for each nurse by looping through nurses again. We gave them dynamic names which included ids so that we could
+create a link between the button and the next modal via the "data-bs-toggle" in the button located at the card footer and and the 
+the modals we created by looping through the nurses and passsing dynamic ids which correspond to the respective card groups
+
+{% endcomment %}
+{% for nurse in all_nurses %}
+<div class="modal fade" id="Modal-{{nurse.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title text-success" id="exampleModalLabel">Nurse details</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body text-center">
+            <div class="row justify-content-center">
+                <div class="col-12 bg-success bg-opacity-10 ">
+                    <div class="mt-3">
+                        {% if nurse.image %}
+                        <img src="/media/{{nurse.image}}" style="border-radius: 50% !important; width: 17%; height: 179px;" class="img-thumbnail" > 
+                        {% else %}
+                        <img src="/media/images.png" style="border-radius: 50% !important; width: 17%; height: 179px;" class="img-thumbnail" > 
+                        {% endif %}
+                       
+                    </div>
+                                       
+                    <div class="text-center my-2">
+                        <h5 class="text-success">{{nurse.fname}} {{nurse.lname}}</h5>
+                    </div>
+                    <p class="mt-2">
+                        <b class="text-success">Bio:</b> {{nurse.bio}}
+                    </p>
+                    <h5 class="text-center mb-5 text-success">Qualifications</h5>
+                    <div class = "row mt-5">
+                        <div class = "col-5">
+                            <div class = "text-center justify-content-center mt-3">
+                                <p><b class="text-success">Company name:</b> To be coded </p>
+                                {% if nurse.day_shift %}
+                                <p><b class="text-success">Preferred Shift:</b>  Day Shift</P>
+                                {% else %}
+                                <p><b class="text-success">Preferred Shift:</b>  Night Shift</p>
+                                {% endif %}
+                                <p><b class="text-success">Rate:</b> To be coded</p>
+                                <p><b class="text-success">Jobs completed:</b> To be coded</p>
+                                <p><b class="text-success">Reviews:</b> To be coded</p>
+                            </div>
+                            
+                        </div>
+                        <div class="col-7">
+                            <!-- Displays the preview of the pdf -->
+                            <embed src="/media/{{nurse.qualification}}" type="application/pdf" height="500px" width="500">
+                        </div>
+
+                    </div>
+                    
+                </div>
+            </div>      
+            
+        </div>
+        <div class="modal-footer">
+          <div class="text-center">
+            <button type="button" class="btn btn-success" data-bs-target="#book-{{nurse.id}}" data-bs-toggle="modal">Request Nanny</button>
           </div>
         </div>
       </div>
-
-      {% endfor %}
     </div>
-  </div>
-</section>
+</div>
+{% endfor %}
+{% comment %} same concept here because we are implementing nested modals {% endcomment %}
+
 
 {% for nurse in all_nurses %}
-<div class="modal fade" id="Modal-{{nurse.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-fullscreen">
+<div class="modal fade" id="book-{{nurse.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Kindly select the duration to book {{nurse.fname}}</h1>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          {{nurse.fname}}
+          <div>
+            <form method="POST" action = "">
+                {% csrf_token %}
+                <div class="mb-3">
+                  <p> {{nurse.id}}</p>
+                  <label for="exampleInputDate" class="form-label">Start Date:</label>
+                  <input type="date" class="form-control" id="exampleInputDate" name="startdate">
+                </div>
+                <div class="mb-3">
+                  <label for="exampleInputDate1" class="form-label">End Date:</label>
+                  <input type="date" class="form-control" id="exampleInputDate1" name="enddate">
+                </div>
+                <input type="hidden" name="IDS" value="{{nurse.id}}">
+            
+          </div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary">Save changes</button>
+            <button type="submit"  class="btn btn-success" name="duration">Book</button>
         </div>
+      </form>
       </div>
     </div>
   </div>
-  {% endfor %}
+
+{% endfor %}
+
+
+  <script>
+    $(document).ready(function () {
+        $('select').selectize({
+            sortField: 'text'
+        });
+    });
+  </script>
 
 {% endblock %}
+
+
+
+
+
+
+
+  

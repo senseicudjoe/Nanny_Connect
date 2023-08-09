@@ -141,6 +141,8 @@ MEDIA_URL = '/media/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+# X_FRAME_OPTIONS='SAMEORIGIN'
+
 
 # Overriding the default user since extrafields were added to the client User which is inheriting fro the abstract user
 AUTH_USER_MODEL = 'authApp.Customuser' 

@@ -15,7 +15,7 @@ class client(models.Model):
         return self.fname
 
 
-class request(models.Model):
+class Request(models.Model):
     client = models.ForeignKey(client,on_delete=models.CASCADE)
     nurse = models.ForeignKey(nurse,on_delete=models.CASCADE)
     start_date = models.DateField(auto_now=True)

@@ -12,3 +12,7 @@ a{
     background-color: #fff;
     border-top: none;
 }
+
+#img1{
+border-radius: 50%;
+}
